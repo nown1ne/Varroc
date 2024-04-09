@@ -1,33 +1,35 @@
-# Battery Capacity Prediction
+# Battery Capacity Prediction for Low-Resource Environments
 
 ## Table of Contents
 - [Introduction](#introduction)
 - [Problem Statement](#problem-statement)
-- [Current Solutions](#current-solutions)
-- [Shortcomings](#shortcomings)
-- [Our Solution](#our-solution)
-- [Code Explanation](#code-explanation)
+- [Current Solutions and Limitations](#current-solutions-and-limitations)
+- [Our Approach](#our-approach)
+- [Critical Points and Model Selection](#critical-points-and-model-selection)
 - [File Structure](#file-structure)
 - [Contributing Guidelines](#contributing-guidelines)
 
 ## Introduction
-This project aims to predict the capacity of batteries using machine learning algorithms based on various input parameters such as temperature, voltage, and time. We utilize discharge cycle data from batteries B0005, B0006, B0007, and B0018 to train and evaluate our predictive models.
+This project aims to develop a battery capacity prediction model suitable for low-resource environments, such as TI C2000 microcontrollers. The model predicts battery capacity based on discharge cycle data, enabling efficient resource utilization and real-time implementation.
 
 ## Problem Statement
-The primary goal is to develop accurate models for predicting the capacity of batteries over time. This has significant applications in industries reliant on battery-powered devices, such as electric vehicles and renewable energy systems.
+Traditional battery capacity prediction models, such as LSTMs, GRUs, and time series models, require significant computational resources, making them unsuitable for low-power microcontrollers like TI C2000. These models often involve complex architectures and large memory footprints, hindering real-time deployment and efficient resource utilization.
 
-## Current Solutions
-Existing approaches for battery capacity prediction often rely on empirical models or physics-based models. These methods may suffer from limited accuracy or scalability issues when dealing with large datasets or complex battery chemistries.
+## Current Solutions and Limitations
+Existing approaches for battery capacity prediction, such as LSTMs and GRUs, rely on recurrent neural networks (RNNs) and time series analysis. While effective, these models demand high computational resources and memory, making them impractical for deployment on low-power microcontrollers like TI C2000.
 
-## Shortcomings
-- Empirical models may lack accuracy, especially when applied to diverse battery chemistries or operating conditions.
-- Physics-based models can be computationally expensive and may require detailed knowledge of battery chemistry and construction.
+## Our Approach
+We propose a lightweight battery capacity prediction model suitable for low-resource environments. Our model utilizes simple regression algorithms trained on discharge cycle data to predict battery capacity. By prioritizing efficiency and simplicity, our approach enables real-time deployment on low-power microcontrollers while maintaining accuracy.
 
-## Our Solution
-We propose a machine learning-based approach for battery capacity prediction. By leveraging discharge cycle data and employing regression algorithms, we aim to develop accurate and scalable models for predicting battery capacity. Our solution offers flexibility and robustness across different battery chemistries and operating conditions.
+## Critical Points and Model Selection
+To ensure efficient resource utilization and accurate battery capacity prediction, we identified four critical points in the discharge cycle data:
+1. **Time of Maximum Temperature:** The time at which the battery reaches its maximum temperature during the discharge cycle. This critical point reflects the thermal stress experienced by the battery, which is indicative of its health and capacity degradation.
+2. **Maximum Temperature:** The highest temperature recorded during the discharge cycle. High temperatures accelerate battery degradation, making it an essential factor in capacity prediction.
+3. **Time after 1500s when Voltage Drops Below 1V:** This critical point signifies the time duration after 1500 seconds when the battery voltage drops below 1 volt. It represents the end-of-life behavior of the battery, indicating imminent capacity depletion.
+4. **Time of Minimum Voltage:** The time at which the battery voltage reaches its minimum value during the discharge cycle. Low voltage levels suggest reduced battery capacity and imminent failure.
 
-## Code Explanation
-We have provided Python code in the notebook `battery_capacity_prediction.ipynb`. This notebook contains the implementation of data preprocessing, model training, and evaluation using various regression algorithms. The code utilizes discharge cycle data from batteries B0005, B0006, B0007, and B0018 to train predictive models and evaluate their performance.
+We chose these critical points based on their significance in battery health monitoring and capacity estimation. By incorporating these points into our model, we capture key indicators of battery degradation and predict capacity accurately. Furthermore, the selection of these critical points aligns with the low-resource requirement of our model, enabling efficient implementation on microcontrollers like TI C2000.
+
 
 ## File Structure
 - `B0005.mat`: Data file containing discharge cycle data for battery B0005.
@@ -47,9 +49,4 @@ We welcome contributions to this project. If you would like to contribute, pleas
 6. Submit a pull request to the main repository's `main` branch.
 
 Thank you for your interest in contributing to our project!
-
-
-
-
-https://github.com/nown1ne/Varroc/assets/25835195/9448119c-44dc-4288-ba85-ec3326c88da9
 
